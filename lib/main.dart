@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MaterialApp(
+      home: MyApp(),
+      debugShowCheckedModeBanner: false,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -9,13 +14,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Container(
-        color: Colors.green[900],
-        alignment: Alignment.center,
-        child: const Text('Ivan Henriques Silva!'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Ivan Henriques'),
       ),
+      drawer: const Drawer(),
     );
   }
 }
