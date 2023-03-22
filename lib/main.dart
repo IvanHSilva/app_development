@@ -43,34 +43,68 @@ class HomePage extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          const Text(
-            '0',
-            style: TextStyle(
-              fontSize: 100,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
+          //const SizedBox(height: 32,),
+          const Padding(
+            padding: EdgeInsets.all(30),
+            child: Text(
+              '0',
+              style: TextStyle(
+                fontSize: 100,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+              ),
             ),
           ),
+          //const SizedBox(height: 32,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextButton(
                 onPressed: increment,
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  fixedSize: const Size(100, 80),
+                  //padding: const EdgeInsets.all(32),
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(
+                      color: Colors.blue,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
                 child: const Text(
                   'Entrar',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
+              const SizedBox(
+                width: 32,
+              ),
               TextButton(
                 onPressed: decrement,
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  fixedSize: const Size(100, 80),
+                  foregroundColor: Colors.black,
+                  //primary: Colors.black,
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(
+                      color: Colors.blue,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
                 child: const Text(
                   'Sair',
                   style: TextStyle(
                     fontSize: 20,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
