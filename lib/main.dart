@@ -25,22 +25,49 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int count = 0;
+  int parks = 30;
 
-  String img = 'assets/images/parking1.jpg';
+  String img = 'assets/images/park-empty.jpg';
+  String msg = '';
 
   void increment() {
     setState(() {
-      count++;
+      if (!isFull) {
+        count++;
+        parks--;
+      }
+      setImage(count);
+      setMessage();
     });
     //print(count);
   }
 
   void decrement() {
     setState(() {
-      count--;
+      if (!isEmpty) {
+        count--;
+        parks++;
+      }
+      setImage(count);
+      setMessage();
     });
     //print(count);
   }
+
+  void setImage(int number) {
+    if (number > 5) img = 'assets/images/park-some.jpg';
+    if (number > 25) img = 'assets/images/park-full.jpg';
+    if (number <= 5) img = 'assets/images/park-empty.jpg';
+  }
+
+  void setMessage() {
+    msg = 'Há $parks vaga(s)!';
+    if (isEmpty) msg = 'Vazio! (30 vagas)';
+    if (isFull) msg = 'Lotado! (0 vagas)';
+  }
+
+  bool get isEmpty => count == 0;
+  bool get isFull => count == 30;
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +84,12 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           // ignore: unnecessary_const
           children: [
-            const Text(
-              'Há vagas!',
+            Text(
+              msg,
               style: TextStyle(
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
-                color: Colors.white,
+                color: isFull ? Colors.red : Colors.white,
               ),
             ),
             //const SizedBox(height: 32,),
@@ -70,10 +97,10 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(30),
               child: Text(
                 '$count',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 100,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: isFull ? Colors.red : Colors.white,
                 ),
               ),
             ),
@@ -82,12 +109,13 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextButton(
-                  onPressed: increment,
+                  onPressed: isFull ? null : increment,
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor:
+                        isFull ? Colors.white.withOpacity(0.2) : Colors.white,
                     fixedSize: const Size(100, 80),
                     //padding: const EdgeInsets.all(32),
-                    foregroundColor: Colors.black,
+                    foregroundColor: isFull ? Colors.red : Colors.black,
                     shape: RoundedRectangleBorder(
                       side: const BorderSide(
                         color: Colors.blue,
@@ -108,9 +136,10 @@ class _HomePageState extends State<HomePage> {
                   width: 32,
                 ),
                 TextButton(
-                  onPressed: decrement,
+                  onPressed: isEmpty ? null : decrement,
                   style: TextButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor:
+                        isEmpty ? Colors.white.withOpacity(0.2) : Colors.white,
                     fixedSize: const Size(100, 80),
                     foregroundColor: Colors.black,
                     //primary: Colors.black,
