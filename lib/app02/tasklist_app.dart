@@ -1,50 +1,52 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class TaskListApp extends StatelessWidget {
-  TaskListApp({super.key});
-
-  final TextEditingController emailController = TextEditingController();
+  const TaskListApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
             children: [
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  labelText: 'E-Mail',
-                  hintText: 'email@provedor.com',
-                  border: OutlineInputBorder(),
-                  labelStyle: TextStyle(
-                    fontSize: 25,
-                    color: Colors.blue,
+              const Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Adicione uma tarefa',
+                    labelStyle: TextStyle(fontSize: 20),
                   ),
+                  style: TextStyle(fontSize: 20),
                 ),
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.purple,
-                ),
+              ),
+              const SizedBox(
+                width: 8,
               ),
               ElevatedButton(
-                onPressed: enter,
-                child: const Text('Entrar'),
-              ),
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  padding: const EdgeInsets.all(18),
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
+                    ),
+                  ),
+                ),
+                child: const Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              )
             ],
           ),
         ),
       ),
     );
-  }
-
-  void enter() {
-    String message = emailController.text;
-    print(message);
-    emailController.clear();
   }
 }
