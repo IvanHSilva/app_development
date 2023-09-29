@@ -1,3 +1,4 @@
+import 'package:app_development/app02/widgets/tasklistitem.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -66,13 +67,7 @@ class _TaskListAppState extends State<TaskListApp> {
                 child: ListView(
                   shrinkWrap: true,
                   children: [
-                    for (String task in tasks)
-                      ListTile(
-                        title: Text(task),
-                        onTap: () {
-                          print(task);
-                        },
-                      ),
+                    for (String task in tasks) const TaskListItem(),
                   ],
                 ),
               ),
