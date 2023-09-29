@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
 
-class TaskListApp extends StatelessWidget {
+// ignore: must_be_immutable
+class TaskListApp extends StatefulWidget {
   const TaskListApp({super.key});
+
+  @override
+  State<TaskListApp> createState() => _TaskListAppState();
+}
+
+class _TaskListAppState extends State<TaskListApp> {
+  List<String> tasks = [];
+
+  final TextEditingController taskController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +24,26 @@ class TaskListApp extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: taskController,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Adicione uma tarefa',
                         labelStyle: TextStyle(fontSize: 20),
                       ),
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      String currentTask = taskController.text;
+                      setState(() {
+                        tasks.add(currentTask);
+                      });
+                      taskController.clear();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       padding: const EdgeInsets.all(18),
@@ -45,14 +62,19 @@ class TaskListApp extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              ListView(
-                shrinkWrap: true,
-                children: [
-                  Container(
-                    color: Colors.green,
-                    height: 50,
-                  ),
-                ],
+              Flexible(
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (String task in tasks)
+                      ListTile(
+                        title: Text(task),
+                        onTap: () {
+                          print(task);
+                        },
+                      ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               Row(
