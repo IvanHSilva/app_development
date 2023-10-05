@@ -1,3 +1,4 @@
+import 'package:app_development/app02/models/tasklist.dart';
 import 'package:app_development/app02/widgets/tasklistitem.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +11,7 @@ class TaskListApp extends StatefulWidget {
 }
 
 class _TaskListAppState extends State<TaskListApp> {
-  List<String> tasks = [];
+  List<TaskList> tasks = [];
 
   final TextEditingController taskController = TextEditingController();
 
@@ -42,7 +43,11 @@ class _TaskListAppState extends State<TaskListApp> {
                       onPressed: () {
                         String currentTask = taskController.text;
                         setState(() {
-                          tasks.add(currentTask);
+                          TaskList newTask = TaskList(
+                            title: currentTask,
+                            date: DateTime.now(),
+                          );
+                          tasks.add(newTask);
                         });
                         taskController.clear();
                       },
@@ -68,9 +73,9 @@ class _TaskListAppState extends State<TaskListApp> {
                   child: ListView(
                     shrinkWrap: true,
                     children: [
-                      for (String task in tasks)
+                      for (TaskList task in tasks)
                         TaskListItem(
-                          title: task,
+                          task: task,
                         ),
                     ],
                   ),
