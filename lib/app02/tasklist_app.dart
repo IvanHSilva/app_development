@@ -76,6 +76,7 @@ class _TaskListAppState extends State<TaskListApp> {
                       for (TaskList task in tasks)
                         TaskListItem(
                           task: task,
+                          onDelete: onDelete,
                         ),
                     ],
                   ),
@@ -117,5 +118,11 @@ class _TaskListAppState extends State<TaskListApp> {
         ),
       ),
     );
+  }
+
+  void onDelete(TaskList task) {
+    setState(() {
+      tasks.remove(task);
+    });
   }
 }
