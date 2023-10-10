@@ -94,7 +94,7 @@ class _TaskListAppState extends State<TaskListApp> {
                     ),
                     const SizedBox(width: 8),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: confirmTaskListClear,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blue,
                         padding: const EdgeInsets.all(18),
@@ -153,5 +153,48 @@ class _TaskListAppState extends State<TaskListApp> {
         duration: const Duration(seconds: 5),
       ),
     );
+  }
+
+  void confirmTaskListClear() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Limpar tarefas'),
+        content: const Text('Deseja mesmo apagar todas as tarefas?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+              textStyle: const TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            child: const Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              clearTaskList();
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.blue[900],
+              textStyle: const TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void clearTaskList() {
+    setState(() {
+      tasks.clear();
+    });
   }
 }
