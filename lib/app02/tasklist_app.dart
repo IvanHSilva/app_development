@@ -12,6 +12,8 @@ class TaskListApp extends StatefulWidget {
 
 class _TaskListAppState extends State<TaskListApp> {
   List<TaskList> tasks = [];
+  TaskList? deletedTaskTitle;
+  int? deletedTaskPosition;
 
   final TextEditingController taskController = TextEditingController();
 
@@ -121,8 +123,35 @@ class _TaskListAppState extends State<TaskListApp> {
   }
 
   void onDelete(TaskList task) {
+    deletedTaskTitle = task;
+    deletedTaskPosition = tasks.indexOf(task);
+
     setState(() {
       tasks.remove(task);
     });
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Tarefa ${task.title} removida com sucesso!',
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+          ),
+        ),
+        backgroundColor: Colors.white,
+        action: SnackBarAction(
+          label: 'Desfazer',
+          textColor: Colors.blue[900],
+          onPressed: () {
+            setState(() {
+              tasks.insert(deletedTaskPosition!, deletedTaskTitle!);
+            });
+          },
+        ),
+        duration: const Duration(seconds: 5),
+      ),
+    );
   }
 }
