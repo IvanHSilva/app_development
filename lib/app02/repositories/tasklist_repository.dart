@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:app_development/app02/models/tasklist.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskListRepository {
@@ -6,4 +9,10 @@ class TaskListRepository {
   }
 
   late SharedPreferences sharePref;
+
+  void saveTaskList(List<TaskList> tasks) {
+    final String jsonText = json.encode(tasks);
+    sharePref.setString('tasklist', jsonText);
+    //print(jsonText);
+  }
 }

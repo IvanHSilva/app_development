@@ -1,4 +1,5 @@
 import 'package:app_development/app02/models/tasklist.dart';
+import 'package:app_development/app02/repositories/tasklist_repository.dart';
 import 'package:app_development/app02/widgets/tasklistitem.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class _TaskListAppState extends State<TaskListApp> {
   int? deletedTaskPosition;
 
   final TextEditingController taskController = TextEditingController();
+  final TaskListRepository taskListRepository = TaskListRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,7 @@ class _TaskListAppState extends State<TaskListApp> {
                             date: DateTime.now(),
                           );
                           tasks.add(newTask);
+                          taskListRepository.saveTaskList(tasks);
                         });
                         taskController.clear();
                       },
