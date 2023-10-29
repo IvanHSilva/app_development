@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TaskListApp extends StatefulWidget {
+  //
   const TaskListApp({super.key});
 
   @override
@@ -12,12 +13,27 @@ class TaskListApp extends StatefulWidget {
 }
 
 class _TaskListAppState extends State<TaskListApp> {
+  //
   List<TaskList> tasks = [];
   TaskList? deletedTaskTitle;
   int? deletedTaskPosition;
 
   final TextEditingController taskController = TextEditingController();
   final TaskListRepository taskListRepository = TaskListRepository();
+
+  String errorMessage = '';
+
+  @override
+  void initState() {
+    //
+    super.initState();
+
+    taskListRepository.loadTaskList().then((value) {
+      setState(() {
+        tasks = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +50,19 @@ class _TaskListAppState extends State<TaskListApp> {
                     Expanded(
                       child: TextField(
                         controller: taskController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           labelText: 'Adicione uma tarefa',
-                          labelStyle: TextStyle(fontSize: 20),
+                          labelStyle: const TextStyle(
+                            fontSize: 25,
+                            color: Colors.blue,
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Colors.blue,
+                            width: 2,
+                          )),
+                          errorText: errorMessage == '' ? null : errorMessage,
                         ),
                         style: const TextStyle(fontSize: 20),
                       ),
@@ -46,6 +71,14 @@ class _TaskListAppState extends State<TaskListApp> {
                     ElevatedButton(
                       onPressed: () {
                         String currentTask = taskController.text;
+
+                        if (currentTask.isEmpty) {
+                          setState(() {
+                            errorMessage = 'A tarefa não pode ser vazia!';
+                          });
+                          return;
+                        }
+
                         setState(() {
                           TaskList newTask = TaskList(
                             title: currentTask,
@@ -53,6 +86,7 @@ class _TaskListAppState extends State<TaskListApp> {
                           );
                           tasks.add(newTask);
                           taskListRepository.saveTaskList(tasks);
+                          errorMessage = '';
                         });
                         taskController.clear();
                       },
@@ -132,6 +166,7 @@ class _TaskListAppState extends State<TaskListApp> {
     setState(() {
       tasks.remove(task);
     });
+    taskListRepository.saveTaskList(tasks);
 
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
@@ -151,6 +186,7 @@ class _TaskListAppState extends State<TaskListApp> {
             setState(() {
               tasks.insert(deletedTaskPosition!, deletedTaskTitle!);
             });
+            taskListRepository.saveTaskList(tasks);
           },
         ),
         duration: const Duration(seconds: 5),
@@ -199,5 +235,6 @@ class _TaskListAppState extends State<TaskListApp> {
     setState(() {
       tasks.clear();
     });
+    taskListRepository.saveTaskList(tasks);
   }
 }
