@@ -22,45 +22,75 @@ class IMCCalcApp extends StatelessWidget {
         ],
       ),
       backgroundColor: Colors.white,
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Icon(
-            Icons.person_outlined,
-            size: 120,
-            color: Colors.green,
-          ),
-          TextField(
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 25,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Icon(
+              Icons.person_outlined,
+              size: 120,
               color: Colors.green,
             ),
-            decoration: InputDecoration(
-              labelText: 'Peso (Kg)',
-              labelStyle: TextStyle(
-                fontSize: 30,
+            const TextField(
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.green,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Peso (Kg)',
+                labelStyle: TextStyle(
+                  fontSize: 30,
+                  color: Colors.green,
+                ),
+              ),
+            ),
+            const TextField(
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                color: Colors.green,
+              ),
+              decoration: InputDecoration(
+                labelText: 'Altura (cm)',
+                labelStyle: TextStyle(
+                  fontSize: 30,
+                  color: Colors.green,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: SizedBox(
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                  child: const Text(
+                    'Calcular',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const Text(
+              'Info',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
                 color: Colors.green,
               ),
             ),
-          ),
-          TextField(
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 25,
-              color: Colors.green,
-            ),
-            decoration: InputDecoration(
-              labelText: 'Altura (cm)',
-              labelStyle: TextStyle(
-                fontSize: 30,
-                color: Colors.green,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
