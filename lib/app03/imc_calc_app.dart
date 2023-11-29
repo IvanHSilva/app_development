@@ -21,6 +21,47 @@ class IMCCalcApp extends StatelessWidget {
           ),
         ],
       ),
+      backgroundColor: Colors.white,
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Icon(
+            Icons.person_outlined,
+            size: 120,
+            color: Colors.green,
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.green,
+            ),
+            decoration: InputDecoration(
+              labelText: 'Peso (Kg)',
+              labelStyle: TextStyle(
+                fontSize: 30,
+                color: Colors.green,
+              ),
+            ),
+          ),
+          TextField(
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 25,
+              color: Colors.green,
+            ),
+            decoration: InputDecoration(
+              labelText: 'Altura (cm)',
+              labelStyle: TextStyle(
+                fontSize: 30,
+                color: Colors.green,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
