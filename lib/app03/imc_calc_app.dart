@@ -12,7 +12,7 @@ class _IMCCalcAppState extends State<IMCCalcApp> {
   TextEditingController weightController = TextEditingController();
   TextEditingController heightController = TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String _info = 'Informe seu peso e altura';
 
@@ -21,6 +21,7 @@ class _IMCCalcAppState extends State<IMCCalcApp> {
     heightController.text = '';
     setState(() {
       _info = 'Informe seu peso e altura';
+      _formKey = GlobalKey<FormState>();
     });
   }
 
@@ -32,20 +33,15 @@ class _IMCCalcAppState extends State<IMCCalcApp> {
       _info = '';
       if (imc >= 40.0) {
         _info = 'Obesidade Grau 3';
-      }
-      if (imc >= 34.9) {
+      } else if (imc >= 34.9) {
         _info = 'Obesidade Grau 2';
-      }
-      if (imc >= 29.9) {
+      } else if (imc >= 29.9) {
         _info = 'Obesidade Grau 1';
-      }
-      if (imc >= 24.9) {
+      } else if (imc >= 24.9) {
         _info = 'Levemente Acima do Peso';
-      }
-      if (imc >= 18.6) {
+      } else if (imc >= 18.6) {
         _info = 'Peso Ideal';
-      }
-      if (imc < 18.6) {
+      } else {
         _info = 'Abaixo do Peso';
       }
       if (_info.isNotEmpty) {
@@ -91,6 +87,7 @@ class _IMCCalcAppState extends State<IMCCalcApp> {
                   if (value!.isEmpty) {
                     return 'Insira seu Peso!';
                   }
+                  return null;
                 },
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
@@ -112,6 +109,7 @@ class _IMCCalcAppState extends State<IMCCalcApp> {
                   if (value!.isEmpty) {
                     return 'Insira sua altura!';
                   }
+                  return null;
                 },
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,

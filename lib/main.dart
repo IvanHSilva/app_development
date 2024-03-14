@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app03/imc_calc_app.dart';
+import 'app04/coin_conversor_app.dart';
+//import 'app03/imc_calc_app.dart';
 //import 'app01/park_app.dart';
 //import 'app02/tasklist_app.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       //home: ParkApp(),
       //home: TaskListApp(),
-      home: IMCCalcApp(),
+      home: CoinConversor(),
       //home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
