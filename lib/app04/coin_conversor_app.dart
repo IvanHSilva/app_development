@@ -4,17 +4,32 @@ import "dart:convert";
 
 const request = "https://api.hgbrasil.com/finance?format=json&key=99c2efe3";
 
-class CoinConversor extends StatelessWidget {
+Future<Map> getData() async {
+  http.Response response = await http.get(Uri.parse(request));
+  return json.decode(response.body);
+}
+
+class CoinConversor extends StatefulWidget {
   const CoinConversor({super.key});
 
-  void respConv() async {
-    http.Response response = await http.get(Uri.parse(request));
-    json.decode(response.body)["results"]["currencies"];
-  }
+  @override
+  State<CoinConversor> createState() => _CoinConversorState();
+}
 
+class _CoinConversorState extends State<CoinConversor> {
   @override
   Widget build(BuildContext context) {
-    respConv;
-    return const Placeholder();
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(
+          "\$ Conversor de Moedas \$",
+          style: TextStyle(
+            color: Colors.yellow[50],
+          ),
+        ),
+        backgroundColor: Colors.amber,
+      ),
+    );
   }
 }
