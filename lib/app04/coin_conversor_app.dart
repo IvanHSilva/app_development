@@ -17,8 +17,13 @@ class CoinConversor extends StatefulWidget {
 }
 
 class _CoinConversorState extends State<CoinConversor> {
+  //
+  late double dolar;
+  late double euro;
+
   @override
   Widget build(BuildContext context) {
+    //
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -31,38 +36,113 @@ class _CoinConversorState extends State<CoinConversor> {
         backgroundColor: Colors.amber,
       ),
       body: FutureBuilder<Map>(
-          future: getData(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return const Center(
+        future: getData(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+              return const Center(
+                child: Text(
+                  "Carregado Dados...",
+                  style: TextStyle(
+                    color: Colors.amber,
+                    fontSize: 25.0,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              );
+            default:
+              if (snapshot.hasError) {
+                return Center(
                   child: Text(
-                    "Carregado Dados...",
+                    "Erro ao Carregar Dados...",
                     style: TextStyle(
-                      color: Colors.amber,
+                      color: Colors.red[200],
                       fontSize: 25.0,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 );
-              default:
-                if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      "Erro ao Carregar Dados...",
-                      style: TextStyle(
-                        color: Colors.red[200],
-                        fontSize: 25.0,
+              } else {
+                dolar = snapshot.data!["results"]["currencies"]["USD"]["buy"];
+                dolar = snapshot.data!["results"]["currencies"]["EUR"]["buy"];
+
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Icon(
+                        Icons.monetization_on,
+                        size: 120.0,
+                        color: Colors.amber,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                  );
-                } else {
-                  return Container(color: Colors.green);
-                }
-            }
-          }),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: "Reais",
+                          labelStyle: const TextStyle(
+                            color: Colors.amber,
+                            fontSize: 30,
+                          ),
+                          prefixText: "R\$ ",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.amber,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Divider(),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: "Dólares",
+                          labelStyle: const TextStyle(
+                            color: Colors.amber,
+                            fontSize: 30,
+                          ),
+                          prefixText: "US\$ ",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.amber,
+                          fontSize: 20,
+                        ),
+                      ),
+                      const Divider(),
+                      TextField(
+                        decoration: InputDecoration(
+                          labelText: "Euros",
+                          labelStyle: const TextStyle(
+                            color: Colors.amber,
+                            fontSize: 30,
+                          ),
+                          prefixText: "€\$ ",
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).hintColor,
+                            ),
+                          ),
+                        ),
+                        style: const TextStyle(
+                          color: Colors.amber,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+          }
+        },
+      ),
     );
   }
 }

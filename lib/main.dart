@@ -13,10 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       //home: ParkApp(),
       //home: TaskListApp(),
-      home: CoinConversor(),
+      home: const CoinConversor(),
+      theme: ThemeData(hintColor: Colors.white, primaryColor: Colors.white),
       //home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
