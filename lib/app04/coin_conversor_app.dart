@@ -18,8 +18,16 @@ class CoinConversor extends StatefulWidget {
 
 class _CoinConversorState extends State<CoinConversor> {
   //
+  final realController = TextEditingController();
+  final dolarController = TextEditingController();
+  final euroController = TextEditingController();
+
   late double dolar;
   late double euro;
+
+  void _realChanged(String text) {}
+  void _dolarChanged(String text) {}
+  void _euroChanged(String text) {}
 
   @override
   Widget build(BuildContext context) {
@@ -77,65 +85,27 @@ class _CoinConversorState extends State<CoinConversor> {
                         size: 120.0,
                         color: Colors.amber,
                       ),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "Reais",
-                          labelStyle: const TextStyle(
-                            color: Colors.amber,
-                            fontSize: 30,
-                          ),
-                          prefixText: "R\$ ",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).hintColor,
-                            ),
-                          ),
-                        ),
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontSize: 20,
-                        ),
-                      ),
+                      //
+                      buildTextField(
+                          "Reais",
+                          "R\$ ",
+                          Theme.of(context).hintColor,
+                          realController,
+                          _realChanged),
                       const Divider(),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "Dólares",
-                          labelStyle: const TextStyle(
-                            color: Colors.amber,
-                            fontSize: 30,
-                          ),
-                          prefixText: "US\$ ",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).hintColor,
-                            ),
-                          ),
-                        ),
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontSize: 20,
-                        ),
-                      ),
+                      buildTextField(
+                          "Dólares",
+                          "US\$ ",
+                          Theme.of(context).hintColor,
+                          dolarController,
+                          _dolarChanged),
                       const Divider(),
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: "Euros",
-                          labelStyle: const TextStyle(
-                            color: Colors.amber,
-                            fontSize: 30,
-                          ),
-                          prefixText: "€\$ ",
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Theme.of(context).hintColor,
-                            ),
-                          ),
-                        ),
-                        style: const TextStyle(
-                          color: Colors.amber,
-                          fontSize: 20,
-                        ),
-                      ),
+                      buildTextField(
+                          "Euros",
+                          "€\$ ",
+                          Theme.of(context).hintColor,
+                          euroController,
+                          _euroChanged),
                     ],
                   ),
                 );
@@ -145,4 +115,33 @@ class _CoinConversorState extends State<CoinConversor> {
       ),
     );
   }
+}
+
+Widget buildTextField(String label, String prefix, Color color,
+    TextEditingController controller, Function function) {
+  return TextField(
+    controller: controller,
+    onChanged: (text) {
+      function(text);
+    },
+    keyboardType: TextInputType.number,
+    decoration: InputDecoration(
+      labelText: label,
+      labelStyle: const TextStyle(
+        color: Colors.amber,
+        fontSize: 30,
+      ),
+      prefixText: prefix,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: color,
+        ),
+      ),
+      focusedBorder: InputBorder.none,
+    ),
+    style: const TextStyle(
+      color: Colors.amber,
+      fontSize: 20,
+    ),
+  );
 }
