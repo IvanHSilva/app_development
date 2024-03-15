@@ -30,6 +30,39 @@ class _CoinConversorState extends State<CoinConversor> {
         ),
         backgroundColor: Colors.amber,
       ),
+      body: FutureBuilder<Map>(
+          future: getData(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return const Center(
+                  child: Text(
+                    "Carregado Dados...",
+                    style: TextStyle(
+                      color: Colors.amber,
+                      fontSize: 25.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                );
+              default:
+                if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      "Erro ao Carregar Dados...",
+                      style: TextStyle(
+                        color: Colors.red[200],
+                        fontSize: 25.0,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  );
+                } else {
+                  return Container(color: Colors.green);
+                }
+            }
+          }),
     );
   }
 }
