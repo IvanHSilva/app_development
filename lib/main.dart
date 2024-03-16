@@ -17,9 +17,24 @@ class MyApp extends StatelessWidget {
       //home: ParkApp(),
       //home: TaskListApp(),
       home: const CoinConversor(),
-      theme: ThemeData(hintColor: Colors.white, primaryColor: Colors.white),
+      theme: themeData(),
       //home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
+}
+
+ThemeData themeData() {
+  return ThemeData(
+    hintColor: Colors.amber,
+    primaryColor: Colors.white,
+    inputDecorationTheme: const InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.white),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.amber),
+      ),
+    ),
+  );
 }

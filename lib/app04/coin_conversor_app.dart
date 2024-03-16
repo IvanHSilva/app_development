@@ -25,22 +25,38 @@ class _CoinConversorState extends State<CoinConversor> {
   late double dolar;
   late double euro;
 
+  void _coinChanged(String text, TextEditingController controller1,
+      TextEditingController controller2, int option) {
+    if (text.isEmpty) {
+      _clearAll();
+      return;
+    }
+    double value = double.parse(text.replaceAll(",", "."));
+    if (option == 1) {
+      controller1.text = (value / dolar).toStringAsFixed(2);
+      controller2.text = (value / euro).toStringAsFixed(2);
+    } else {
+      controller1.text = (value * dolar).toStringAsFixed(2);
+      controller2.text = (value * dolar / euro).toStringAsFixed(2);
+    }
+  }
+
   void _realChanged(String text) {
-    double real = double.parse(text);
-    dolarController.text = (real / dolar).toStringAsFixed(2);
-    euroController.text = (real / euro).toStringAsFixed(2);
+    _coinChanged(text, dolarController, euroController, 1);
   }
 
   void _dolarChanged(String text) {
-    double dolar = double.parse(text);
-    realController.text = (dolar * this.dolar).toStringAsFixed(2);
-    euroController.text = (dolar * this.dolar / euro).toStringAsFixed(2);
+    _coinChanged(text, realController, euroController, 2);
   }
 
   void _euroChanged(String text) {
-    double euro = double.parse(text);
-    realController.text = (euro * this.euro).toStringAsFixed(2);
-    dolarController.text = (euro * this.euro / dolar).toStringAsFixed(2);
+    _coinChanged(text, realController, dolarController, 3);
+  }
+
+  void _clearAll() {
+    realController.text = "";
+    dolarController.text = "";
+    euroController.text = "";
   }
 
   @override
@@ -101,25 +117,13 @@ class _CoinConversorState extends State<CoinConversor> {
                       ),
                       //
                       buildTextField(
-                          "Reais",
-                          "R\$ ",
-                          Theme.of(context).hintColor,
-                          realController,
-                          _realChanged),
-                      const Divider(),
+                          "Reais", "R\$ ", realController, _realChanged),
+                      const SizedBox(height: 20.0),
                       buildTextField(
-                          "Dólares",
-                          "US\$ ",
-                          Theme.of(context).hintColor,
-                          dolarController,
-                          _dolarChanged),
-                      const Divider(),
+                          "Dólares", "US\$ ", dolarController, _dolarChanged),
+                      const SizedBox(height: 20.0),
                       buildTextField(
-                          "Euros",
-                          "€\$ ",
-                          Theme.of(context).hintColor,
-                          euroController,
-                          _euroChanged),
+                          "Euros", "€\$ ", euroController, _euroChanged),
                     ],
                   ),
                 );
@@ -131,7 +135,7 @@ class _CoinConversorState extends State<CoinConversor> {
   }
 }
 
-Widget buildTextField(String label, String prefix, Color color,
+Widget buildTextField(String label, String prefix,
     TextEditingController controller, Function function) {
   return TextField(
     controller: controller,
@@ -146,16 +150,11 @@ Widget buildTextField(String label, String prefix, Color color,
         fontSize: 30,
       ),
       prefixText: prefix,
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: color,
-        ),
-      ),
-      focusedBorder: InputBorder.none,
+      //focusedBorder: InputBorder.none,
     ),
     style: const TextStyle(
-      color: Colors.amber,
-      fontSize: 20,
+      color: Colors.white,
+      fontSize: 25,
     ),
   );
 }
