@@ -111,8 +111,9 @@ class _HomePageState extends State<HomePage> {
                 TextButton(
                   onPressed: isFull ? null : increment,
                   style: TextButton.styleFrom(
-                    backgroundColor:
-                        isFull ? Colors.white.withOpacity(0.2) : Colors.white,
+                    backgroundColor: isFull
+                        ? Colors.white.withValues(alpha: 0.2)
+                        : Colors.white,
                     fixedSize: const Size(100, 80),
                     //padding: const EdgeInsets.all(32),
                     foregroundColor: isFull ? Colors.red : Colors.black,
@@ -138,8 +139,9 @@ class _HomePageState extends State<HomePage> {
                 TextButton(
                   onPressed: isEmpty ? null : decrement,
                   style: TextButton.styleFrom(
-                    backgroundColor:
-                        isEmpty ? Colors.white.withOpacity(0.2) : Colors.white,
+                    backgroundColor: isEmpty
+                        ? Colors.white.withValues(alpha: 0.2)
+                        : Colors.white,
                     fixedSize: const Size(100, 80),
                     foregroundColor: Colors.black,
                     //primary: Colors.black,
